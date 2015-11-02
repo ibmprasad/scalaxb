@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://scala.ibm.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://scala.ibm.com" xmlns:intf="http://scala.ibm.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+     <wsdl:types>
+        <schema elementFormDefault="qualified" targetNamespace="http://scala.ibm.com" xmlns="http://www.w3.org/2001/XMLSchema">
+            <complexType name="Customer">
+                <sequence>
+                    <element name="emailId" nillable="true" type="xsd:string"/>
+                    <element name="firstNames" nillable="true" type="xsd:string"/>
+                    <element name="lastName" nillable="true" type="xsd:string"/>
+                    <element name="phoneNumber" nillable="true" type="xsd:string"/>
+                </sequence>
+            </complexType>
+            <element name="cust" type="impl:Customer"/>
+            <complexType name="ArrayOf_xsd_anyType">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+                </sequence>
+            </complexType>
+            <element name="getAccountSummaryReturn" type="impl:ArrayOf_xsd_anyType"/>
+        </schema>
+    </wsdl:types>
+
+    <wsdl:message name="getAccountSummaryResponse">
+
+        <wsdl:part element="impl:getAccountSummaryReturn" name="getAccountSummaryReturn"/>
+
+    </wsdl:message>
+
+    <wsdl:message name="getAccountSummaryRequest">
+
+        <wsdl:part element="impl:cust" name="cust"/>
+
+    </wsdl:message>
+
+    <wsdl:portType name="AccountSummary">
+
+        <wsdl:operation name="getAccountSummary" parameterOrder="cust">
+
+            <wsdl:input message="impl:getAccountSummaryRequest" name="getAccountSummaryRequest"/>
+
+            <wsdl:output message="impl:getAccountSummaryResponse" name="getAccountSummaryResponse"/>
+
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="AccountSummarySoapBinding" type="impl:AccountSummary">
+
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="getAccountSummary">
+
+            <wsdlsoap:operation soapAction=""/>
+
+            <wsdl:input name="getAccountSummaryRequest">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:input>
+
+            <wsdl:output name="getAccountSummaryResponse">
+
+                <wsdlsoap:body use="literal"/>
+
+            </wsdl:output>
+
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="AccountSummaryService">
+
+        <wsdl:port binding="impl:AccountSummarySoapBinding" name="AccountSummary">
+
+            <wsdlsoap:address location="http://localhost:9080/BankApp/services/AccountSummary"/>
+
+        </wsdl:port>
+
+    </wsdl:service>
+
+</wsdl:definitions>
