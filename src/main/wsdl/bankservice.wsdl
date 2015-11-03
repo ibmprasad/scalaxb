@@ -11,12 +11,14 @@
                 </sequence>
             </complexType>
             <element name="cust" type="impl:Customer"/>
-            <complexType name="ArrayOf_xsd_anyType">
+            <complexType name="Account">
                 <sequence>
-                    <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+                    <element name="accountId" nillable="true" type="xsd:string"/>
+                    <element name="accountType" nillable="true" type="xsd:string"/>
+                    <element name="balance" nillable="true" type="xsd:string"/>
                 </sequence>
             </complexType>
-            <element name="getAccountSummaryReturn" type="impl:ArrayOf_xsd_anyType"/>
+            <element name="getAccountSummaryReturn" type="impl:Account"/>
         </schema>
     </wsdl:types>
 
@@ -72,7 +74,7 @@
 
         <wsdl:port binding="impl:AccountSummarySoapBinding" name="AccountSummary">
 
-            <wsdlsoap:address location="http://localhost:9080/BankApp/services/AccountSummary"/>
+            <wsdlsoap:address location="http://localhost:9080/BankApp/"/>
 
         </wsdl:port>
 
